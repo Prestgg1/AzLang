@@ -1,9 +1,9 @@
-funksiya salamla():
-    çap(`Salam`)
-salamla()
-funksiya QiymetVer(a: ədəd,b: ədəd):
-    çap(`Qiymət: ${a}`)
-QiymetVer(1,2)
-dəyişən e:ədəd = 1
-sabit F:ədəd = 2
-çap(`Qiymət: ${e+F} ${e}  ${F}`)
+dəyişən hello:mətn = "Salam"
+sabit HELLO:mətn = "Salam"
+çap(hello)
+
+
+funksiya salamla(text:mətn)
+    çap(text)
+
+salamla(hello)

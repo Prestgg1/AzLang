@@ -10,6 +10,7 @@ pub enum Error {
     InvalidVariableDeclaration(String),
     ConstantNameMustBeUppercase(String),
     InvalidConstantDeclaration(String),
+    InvalidArgumentCount(String),
 }
 
 impl fmt::Display for Error {
@@ -38,6 +39,9 @@ impl fmt::Display for Error {
             }
             Error::InvalidConstantDeclaration(stmt) => {
                 write!(f, "\x1b[1;31mNaməlum sabit deklarasiyasi: {}\x1b[0m", stmt)
+            }
+            Error::InvalidArgumentCount(stmt) => {
+                write!(f, "\x1b[1;31mNaməlum funksiya çağırışısı: {}\x1b[0m", stmt)
             }
         }
     }

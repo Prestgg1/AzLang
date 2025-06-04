@@ -1,15 +1,12 @@
-fn salamla() {
-    println!("Salam");
-}
+#![allow(warnings)]
 
-fn QiymetVer(a: usize, b: usize) {
-    println!("Qiymət: {}", a);
+fn salamla(text: String) {
+    println!("{}", text);
 }
 
 fn main() {
-    salamla();
-    QiymetVer(1, 2);
-    let mut e: usize = 1;
-    const F: usize = 2;
-    println!("Qiymət: {} {}  {}", e+F, e, F);
+    let mut hello: String = String::from("Salam");
+    const HELLO: &str = "Salam";
+    println!("{}", hello);
+    salamla(hello);
 }
