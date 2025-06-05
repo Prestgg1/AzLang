@@ -1,11 +1,16 @@
 use super::Statement;
 use crate::error::Error;
+use crate::syntax::Syntax;
 use crate::types::Type;
 
-pub fn parse_variable(trimmed: &str) -> Result<Statement, Error> {
-    let is_mutable = trimmed.starts_with("dəyişən ");
-    let prefix = if is_mutable { "dəyişən " } else { "sabit " };
-    let rest = trimmed.strip_prefix(prefix).unwrap().trim();
+pub fn parse_variable(trimmed: &str, syntax: &Syntax) -> Result<Statement, Error> {
+    let is_mutable = trimmed.starts_with(&syntax.mutable_decl);
+    let prefix = if is_mutable {
+        format!("{} ", &syntax.mutable_decl)
+    } else {
+        format!("{} ", &syntax.constant_decl)
+    };
+    let rest = trimmed.strip_prefix(&prefix).unwrap().trim();
 
     let parts: Vec<&str> = rest.split('=').map(|s| s.trim()).collect();
     if parts.len() != 2 {
@@ -43,7 +48,6 @@ pub fn parse_variable(trimmed: &str) -> Result<Statement, Error> {
         (name, Type::Eded)
     };
 
-    // ✨ Burada DSL dəyəri Rust dəyərinə çevrilir
     let value = var_type.to_rust_value(raw_value.trim(), !is_mutable);
 
     Ok(Statement::VariableDecl {

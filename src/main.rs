@@ -4,9 +4,11 @@ mod error;
 pub mod functions;
 pub mod parser;
 mod runner;
+pub mod syntax;
 pub mod transpiler;
 mod types;
 pub mod utils;
+pub use syntax::Syntax;
 pub mod warning;
 
 use clap::{CommandFactory, FromArgMatches, Parser, Subcommand};
@@ -64,7 +66,9 @@ fn main() -> Result<()> {
 fn build(input_path: &str) -> Result<()> {
     let input_code = utils::read_file(input_path).map_err(|e| eyre!("Fayl oxunmadı!: {}", e))?;
 
-    let parsed = parser::parse(&input_code).map_err(|e| eyre!("Syntax xətası!: {}", e))?;
+    let syntax = Syntax::load().map_err(|e| eyre!("Syntax xətası!: {}", e))?;
+
+    let parsed = parser::parse(&input_code, &syntax).map_err(|e| eyre!("Syntax xətası!: {}", e))?;
 
     let rust_code =
         transpiler::transpile(&parsed).map_err(|e| eyre!("Transpilasiya xətası: {}", e))?;

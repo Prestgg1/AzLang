@@ -1,16 +1,19 @@
-mod function;
+pub mod block;
+pub mod conditional;
+pub mod function;
 mod variable;
-
 use crate::error::Error;
+use crate::syntax::Syntax;
 use crate::types::Type;
-
+pub use block::parse_block;
+pub use conditional::parse_conditional;
 pub use function::parse_function;
 pub use variable::parse_variable;
 
 #[derive(Debug)]
 pub enum Statement {
     Print(String),
-    Drop(String), // Yeni əlavə
+    Drop(String),
     FunctionDef {
         name: String,
         params: Vec<(String, Type)>,
@@ -26,26 +29,31 @@ pub enum Statement {
         var_type: Type,
         value: String,
     },
+    Conditional(Vec<conditional::Conditional>),
 }
 
 /// Kod mətnini parser vasitəsilə `Statement` massivinə çevirir
-pub fn parse(code: &str) -> Result<Vec<Statement>, Error> {
+pub fn parse(code: &str, syntax: &Syntax) -> Result<Vec<Statement>, Error> {
     let mut statements = Vec::new();
     let mut lines = code.lines().peekable();
 
     while let Some(line) = lines.next() {
         let trimmed = line.trim();
 
-        if trimmed.starts_with("çap(") && trimmed.ends_with(")") {
-            let content = &trimmed[4..trimmed.len() - 1];
+        if trimmed.starts_with(&syntax.print) && trimmed.ends_with(")") {
+            let content = &trimmed[syntax.print.len()..trimmed.len() - 1];
             statements.push(Statement::Print(content.to_string()));
-        } else if trimmed.starts_with("sil(") && trimmed.ends_with(")") {
-            let content = &trimmed[4..trimmed.len() - 1];
+        } else if trimmed.starts_with(&format!("{} ", syntax.conditional)) {
+            statements.push(parse_conditional(trimmed, &mut lines, syntax)?);
+        } else if trimmed.starts_with(&format!("{}(", syntax.drop)) && trimmed.ends_with(")") {
+            let content = &trimmed[syntax.drop.len() + 1..trimmed.len() - 1];
             statements.push(Statement::Drop(content.to_string()));
-        } else if trimmed.starts_with("funksiya ") {
-            statements.push(parse_function(trimmed, &mut lines)?);
-        } else if trimmed.starts_with("dəyişən ") || trimmed.starts_with("sabit ") {
-            statements.push(parse_variable(trimmed)?);
+        } else if trimmed.starts_with(&format!("{} ", syntax.function_def)) {
+            statements.push(parse_function(trimmed, &mut lines, syntax)?);
+        } else if trimmed.starts_with(&format!("{} ", syntax.mutable_decl))
+            || trimmed.starts_with(&format!("{} ", syntax.constant_decl))
+        {
+            statements.push(parse_variable(trimmed, syntax)?);
         } else if trimmed.contains('(') && trimmed.ends_with(')') {
             let open_paren = trimmed.find('(').unwrap();
             let close_paren = trimmed.rfind(')').unwrap();

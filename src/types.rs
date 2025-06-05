@@ -38,9 +38,9 @@ impl Type {
                     format!("String::from(\"{}\")", cleaned)
                 }
             }
-            Type::Eded => format!("{}usize", value),
-            Type::KicikEded => format!("{}i8", value),
-            Type::BoyukEded => format!("{}i128", value),
+            Type::Eded => format!("{}", value),
+            Type::KicikEded => format!("{}", value),
+            Type::BoyukEded => format!("{}", value),
         }
     }
 }

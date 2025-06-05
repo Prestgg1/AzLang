@@ -1,12 +1,17 @@
 #![allow(warnings)]
 
-fn salamla(text: String) {
-    println!("{}", text);
+fn main() {
+if 1 == 2 {
+        println!("{}", true);
 }
 
-fn main() {
-    let mut hello: String = String::from("Salam");
-    const HELLO: &str = "Salam";
-    println!("{}", hello);
-    salamla(hello);
+else if 1 == 1 {
+        let mut a: usize = 1;
+        println!("{}", a);
+}
+
+else {
+        println!("{}", false);
+}
+
 }

@@ -1,0 +1,10 @@
+{
+    "print": "çap",
+    "mutable_decl": "dəyişən",
+    "constant_decl": "sabit",
+    "function_def": "funksiya",
+    "conditional": "əgər",
+    "_else": "yoxsa",
+    "else_if": "yoxsa əgər",
+    "drop": "sil"
+}

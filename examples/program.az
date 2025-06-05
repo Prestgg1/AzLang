@@ -1,9 +1,8 @@
-dəyişən hello:mətn = "Salam"
-sabit HELLO:mətn = "Salam"
-çap(hello)
+əgər 1 == 2:
+    çap(true)
+yoxsa əgər 1 == 1:
+    dəyişən a = 1
+    çap(a)
+yoxsa:
+    çap(false)
 
-
-funksiya salamla(text:mətn)
-    çap(text)
-
-salamla(hello)

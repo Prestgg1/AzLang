@@ -1,14 +1,19 @@
 use super::Statement;
 use crate::error::Error;
+use crate::parser::parse_variable;
+use crate::syntax::Syntax;
 use crate::types::Type;
 
 /// Funksiya başlığını və bədənini analiz edib `Statement::FunctionDef` formasına çevirir
 pub fn parse_function(
     trimmed: &str,
     lines: &mut std::iter::Peekable<std::str::Lines>,
+    syntax: &Syntax,
 ) -> Result<Statement, Error> {
-    // Başlıqdan "funksiya " prefiksini silirik
-    let header = trimmed.strip_prefix("funksiya ").unwrap();
+    // Başlıqdan funksiya açar sözünü silirik
+    let header = trimmed
+        .strip_prefix(&syntax.function_def)
+        .ok_or(Error::InvalidFunctionHeader)?;
 
     // Parametrlərin olduğu hissəni tapmaq üçün mötərizələrin indekslərini alırıq
     let open_paren = header.find('(').ok_or(Error::InvalidFunctionHeader)?;
@@ -26,16 +31,13 @@ pub fn parse_function(
         if param.is_empty() {
             continue;
         }
-        // Parametri `ad: tip` formatında ayırırıq
-        let parts: Vec<&str> = param.split(':').map(|s| s.trim()).collect();
 
-        // Əgər format səhvdirsə error qaytarırıq
+        let parts: Vec<&str> = param.split(':').map(|s| s.trim()).collect();
         if parts.len() != 2 {
             return Err(Error::InvalidParameterFormat(param.to_string()));
         }
 
         let param_name = parts[0].to_string();
-        // Tipi `Type` enumuna çeviririk, əgər məlum tip deyilsə error veririk
         let param_type =
             Type::from_str(parts[1]).ok_or(Error::UnknownType(parts[1].to_string()))?;
         params.push((param_name, param_type));
@@ -43,28 +45,32 @@ pub fn parse_function(
 
     let mut body = Vec::new();
 
-    // Funksiya bədənini oxuyuruq - boş sətirləri keçirik
     while let Some(&next_line) = lines.peek() {
         if next_line.trim().is_empty() {
             lines.next();
             continue;
         }
 
-        // Funksiya bədəni dörd boşluq və ya tab ilə indent olunmalıdır, əks halda funksiya bədəni bitmiş sayılır
+        // Funksiya bədəni indent olunmalıdır
         if !next_line.starts_with("    ") && !next_line.starts_with("\t") {
             break;
         }
 
-        // Sətiri oxuyuruq və indentləri silirik
         let body_line = lines.next().unwrap().trim();
-
-        // Yalnız `çap()` əmrlərini bədəndə qəbul edirik
-        if body_line.starts_with("çap(") && body_line.ends_with(")") {
-            let content = &body_line[4..body_line.len() - 1];
-            body.push(Statement::Print(content.to_string()));
-        } else {
-            // Naməlum və ya dəstəklənməyən ifadə tapılarsa error
-            return Err(Error::UnknownBodyStatement(body_line.to_string()));
+        match body_line {
+            line if line.starts_with(&format!("{}(", syntax.print)) && line.ends_with(")") => {
+                let content = &line[syntax.print.len() + 1..line.len() - 1];
+                body.push(Statement::Print(content.to_string()));
+            }
+            line if line.starts_with(&format!("{} ", syntax.mutable_decl))
+                || line.starts_with(&format!("{} ", syntax.constant_decl)) =>
+            {
+                let stmt = parse_variable(line, syntax)?;
+                body.push(stmt);
+            }
+            line => {
+                return Err(Error::UnknownBodyStatement(line.to_string()));
+            }
         }
     }
 
