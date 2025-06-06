@@ -1,0 +1,40 @@
+[package]
+name = "rustpython-codegen"
+description = "Compiler for python code into bytecode for the rustpython VM."
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+repository.workspace = true
+license.workspace = true
+
+
+[dependencies]
+# rustpython-ast = { workspace = true, features=["unparse", "constant-optimization"] }
+# rustpython-parser-core = { workspace = true }
+rustpython-compiler-core = { workspace = true }
+rustpython-compiler-source = {workspace = true }
+rustpython-literal = {workspace = true }
+rustpython-wtf8 = { workspace = true }
+ruff_python_ast = { workspace = true }
+ruff_text_size = { workspace = true }
+ruff_source_file = { workspace = true }
+
+ahash = { workspace = true }
+bitflags = { workspace = true }
+indexmap = { workspace = true }
+itertools = { workspace = true }
+log = { workspace = true }
+num-complex = { workspace = true }
+num-traits = { workspace = true }
+thiserror = { workspace = true }
+malachite-bigint = { workspace = true }
+memchr = { workspace = true }
+unicode_names2 = { workspace = true }
+
+[dev-dependencies]
+ruff_python_parser = { workspace = true }
+insta = { workspace = true }
+
+[lints]
+workspace = true
