@@ -37,8 +37,8 @@ pub fn parse_variable(trimmed: &str, syntax: &Syntax) -> Result<Statement, Error
         if !is_mutable && !name.chars().all(|c| c.is_ascii_uppercase()) {
             return Err(Error::ConstantNameMustBeUppercase(name));
         }
-        let var_type =
-            Type::from_str(left_parts[1]).ok_or(Error::UnknownType(left_parts[1].to_string()))?;
+        let var_type = Type::from_str(left_parts[1], &syntax)
+            .ok_or(Error::UnknownType(left_parts[1].to_string()))?;
         (name, var_type)
     } else {
         let name = left.to_string();

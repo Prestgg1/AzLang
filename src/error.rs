@@ -11,6 +11,7 @@ pub enum Error {
     ConstantNameMustBeUppercase(String),
     InvalidConstantDeclaration(String),
     InvalidArgumentCount(String),
+    InvalidSyntax(String),
 }
 
 impl fmt::Display for Error {
@@ -42,6 +43,9 @@ impl fmt::Display for Error {
             }
             Error::InvalidArgumentCount(stmt) => {
                 write!(f, "\x1b[1;31mNaməlum funksiya çağırışısı: {}\x1b[0m", stmt)
+            }
+            Error::InvalidSyntax(stmt) => {
+                write!(f, "\x1b[1;31mNaməlum sintaks: {}\x1b[0m", stmt)
             }
         }
     }

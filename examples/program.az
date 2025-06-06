@@ -1,8 +1,3 @@
-əgər 1 == 2:
-    çap(true)
-yoxsa əgər 1 == 1:
-    dəyişən a = 1
-    çap(a)
-yoxsa:
-    çap(false)
-
+dəyişən rəqəmlər: siyahı<ədəd> = [1,2,3,4,5,7]
+gəz rəqəm rəqəmlər:
+    çap(rəqəm)

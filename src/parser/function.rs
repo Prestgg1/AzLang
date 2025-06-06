@@ -39,7 +39,7 @@ pub fn parse_function(
 
         let param_name = parts[0].to_string();
         let param_type =
-            Type::from_str(parts[1]).ok_or(Error::UnknownType(parts[1].to_string()))?;
+            Type::from_str(parts[1], syntax).ok_or(Error::UnknownType(parts[1].to_string()))?;
         params.push((param_name, param_type));
     }
 

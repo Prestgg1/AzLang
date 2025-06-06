@@ -1,12 +1,13 @@
 mod conditional;
 mod function_call;
 mod function_def;
+mod loops;
 mod print;
 mod variable_decl;
-
 use super::Context;
 use crate::error::Error;
 use crate::parser::Statement;
+use crate::transpiler::handlers::loops::LoopHandler;
 use crate::types::Type;
 use std::collections::HashSet;
 
@@ -74,6 +75,18 @@ pub fn dispatch_statement(
         }
         Statement::Conditional(conditionals) => {
             ConditionalHandler(conditionals).handle(context)?;
+        }
+        Statement::Loop {
+            iterator,
+            iterable,
+            body,
+        } => {
+            LoopHandler {
+                iterator,
+                iterable,
+                body,
+            }
+            .handle(context)?;
         }
     }
 

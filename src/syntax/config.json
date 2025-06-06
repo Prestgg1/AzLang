@@ -6,5 +6,10 @@
     "conditional": "əgər",
     "_else": "yoxsa",
     "else_if": "yoxsa əgər",
-    "drop": "sil"
+    "drop": "sil",
+    "_loop": "gəz",
+    "biginteger": "böyük_ədəd",
+    "lowinteger": "kiçik_ədəd",
+    "integer": "ədəd",
+    "string": "mətn"
 }

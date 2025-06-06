@@ -11,6 +11,11 @@ pub struct Syntax {
     pub _else: String,
     pub else_if: String,
     pub drop: String,
+    pub integer: String,
+    pub biginteger: String,
+    pub lowinteger: String,
+    pub string: String,
+    pub _loop: String,
 }
 
 impl Syntax {

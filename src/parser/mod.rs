@@ -1,6 +1,7 @@
 pub mod block;
 pub mod conditional;
 pub mod function;
+pub mod loops;
 mod variable;
 use crate::error::Error;
 use crate::syntax::Syntax;
@@ -8,6 +9,7 @@ use crate::types::Type;
 pub use block::parse_block;
 pub use conditional::parse_conditional;
 pub use function::parse_function;
+pub use loops::parse_loop;
 pub use variable::parse_variable;
 
 #[derive(Debug)]
@@ -30,6 +32,11 @@ pub enum Statement {
         value: String,
     },
     Conditional(Vec<conditional::Conditional>),
+    Loop {
+        iterator: String,
+        iterable: String,
+        body: Vec<Statement>,
+    },
 }
 
 /// Kod mətnini parser vasitəsilə `Statement` massivinə çevirir
@@ -50,6 +57,8 @@ pub fn parse(code: &str, syntax: &Syntax) -> Result<Vec<Statement>, Error> {
             statements.push(Statement::Drop(content.to_string()));
         } else if trimmed.starts_with(&format!("{} ", syntax.function_def)) {
             statements.push(parse_function(trimmed, &mut lines, syntax)?);
+        } else if trimmed.starts_with(&format!("{} ", syntax._loop)) {
+            statements.push(parse_loop(trimmed, &mut lines, syntax)?);
         } else if trimmed.starts_with(&format!("{} ", syntax.mutable_decl))
             || trimmed.starts_with(&format!("{} ", syntax.constant_decl))
         {
