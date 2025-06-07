@@ -192,16 +192,8 @@ method.
 
 ## Credit
 
-- Sabuhi Sariyev
-- Tunjay Akbarli
-
-## Links
-
-These are some useful links to related projects:
-
-- https://github.com/ProgVal/pythonvm-rust
-- https://github.com/shinglyu/AzLang
-- https://github.com/windelbouwman/rspython
+- Sabuhi Sariyev (Prestgg1)
+- Tunjay Akbarli (hekimoghlu)
 
 ## License
 
