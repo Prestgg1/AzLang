@@ -1,6 +1,6 @@
 [package]
 name = "rustpython-common"
-description = "General python functions and algorithms for use in RustPython"
+description = "General python functions and algorithms for use in AzLang"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true

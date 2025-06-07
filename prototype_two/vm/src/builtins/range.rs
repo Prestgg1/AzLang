@@ -519,7 +519,7 @@ impl Representable for PyRange {
 //
 // Unfortunately, since AtomicCell requires a Copy type, no BigInt implementations can
 // generally be used. As such, usize::MAX is the upper bound on number of elements (length)
-// the range can contain in RustPython.
+// the range can contain in AzLang.
 //
 // This doesn't preclude the range from containing large values, since start and step
 // can be BigInts, we can store any arbitrary range of values.

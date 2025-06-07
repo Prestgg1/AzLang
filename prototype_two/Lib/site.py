@@ -286,7 +286,7 @@ def _getuserbase():
     if os.name == "nt":
         base = os.environ.get("APPDATA") or "~"
         # XXX: RUSTPYTHON; please keep this change for site-packages
-        return joinuser(base, "RustPython")
+        return joinuser(base, "AzLang")
 
     if sys.platform == "darwin" and sys._framework:
         return joinuser("~", "Library", sys._framework,
@@ -301,7 +301,7 @@ def _get_path(userbase):
 
     if os.name == 'nt':
         ver_nodot = sys.winver.replace('.', '')
-        return f'{userbase}\\RustPython{ver_nodot}\\site-packages'
+        return f'{userbase}\\AzLang{ver_nodot}\\site-packages'
 
     if sys.platform == 'darwin' and sys._framework:
         return f'{userbase}/lib/rustpython/site-packages'

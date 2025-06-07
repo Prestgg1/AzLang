@@ -1,6 +1,6 @@
 [package]
 name = "rustpython-sre_engine"
-authors = ["Kangzhi Shi <shikangzhi@gmail.com>", "RustPython Team"]
+authors = ["Kangzhi Shi <shikangzhi@gmail.com>", "AzLang Team"]
 description = "A low-level implementation of Python's SRE regex engine"
 keywords = ["regex"]
 include = ["LICENSE", "src/**/*.rs"]

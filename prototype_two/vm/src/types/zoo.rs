@@ -93,7 +93,7 @@ pub struct TypeZoo {
     pub union_type: &'static Py<PyType>,
     pub member_descriptor_type: &'static Py<PyType>,
 
-    // RustPython-original types
+    // AzLang-original types
     pub method_def: &'static Py<PyType>,
 }
 

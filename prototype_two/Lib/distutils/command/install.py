@@ -81,7 +81,7 @@ if HAS_USER_SITE:
 # XXX RUSTPYTHON: replace python with rustpython in all these paths
 for group in INSTALL_SCHEMES.values():
     for key in group.keys():
-        group[key] = group[key].replace("Python", "RustPython").replace("python", "rustpython")
+        group[key] = group[key].replace("Python", "AzLang").replace("python", "rustpython")
 
 # The keys to an installation scheme; if any new types of files are to be
 # installed, be sure to add an entry to every installation scheme above,

@@ -16,7 +16,7 @@ pub const VERSION_HEX: usize =
 
 pub fn get_version() -> String {
     format!(
-        "{:.80} ({:.80}) \n[RustPython {} with {:.80}]", // \n is PyPy convention
+        "{:.80} ({:.80}) \n[AzLang {} with {:.80}]", // \n is PyPy convention
         get_version_number(),
         get_build_info(),
         env!("CARGO_PKG_VERSION"),

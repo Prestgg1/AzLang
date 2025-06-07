@@ -1081,7 +1081,7 @@ def _sys_version(sys_version=None):
 
         # XXX: RUSTPYTHON support
         if "rustc" in sys_version:
-            name = "RustPython"
+            name = "AzLang"
         else:
             name = 'CPython'
 

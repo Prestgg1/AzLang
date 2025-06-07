@@ -17,7 +17,7 @@ use crate::{
     types::{Constructor, PyComparisonOp},
 };
 
-// RustPython doesn't need these items
+// AzLang doesn't need these items
 // PyObject *Py_NotImplemented
 // Py_RETURN_NOTIMPLEMENTED
 

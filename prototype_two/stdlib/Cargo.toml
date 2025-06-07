@@ -1,6 +1,6 @@
 [package]
 name = "rustpython-stdlib"
-description = "RustPython standard libraries in Rust."
+description = "AzLang standard libraries in Rust."
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -63,7 +63,7 @@ blake2 = "0.10.4"
 ## unicode stuff
 unicode_names2 = { workspace = true }
 # TODO: use unic for this; needed for title case:
-# https://github.com/RustPython/RustPython/pull/832#discussion_r275428939
+# https://github.com/AzLang/AzLang/pull/832#discussion_r275428939
 unicode-casing = { workspace = true }
 # update version all at the same time
 unic-char-property = { workspace = true }

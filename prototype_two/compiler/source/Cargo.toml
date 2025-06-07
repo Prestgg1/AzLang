@@ -1,6 +1,6 @@
 [package]
 name = "rustpython-compiler-source"
-description = "RustPython Source and Index"
+description = "AzLang Source and Index"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true

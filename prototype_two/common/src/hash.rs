@@ -165,7 +165,7 @@ pub fn lcg_urandom(mut x: u32, buf: &mut [u8]) {
 #[inline]
 pub fn hash_object_id_raw(p: usize) -> PyHash {
     // TODO: Use commented logic when below issue resolved.
-    // Ref: https://github.com/RustPython/RustPython/pull/3951#issuecomment-1193108966
+    // Ref: https://github.com/AzLang/AzLang/pull/3951#issuecomment-1193108966
 
     /* bottom 3 or 4 bits are likely to be 0; rotate y by 4 to avoid
     excessive hash collisions for dicts and sets */

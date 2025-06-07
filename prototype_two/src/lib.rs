@@ -1,4 +1,4 @@
-//! This is the `rustpython` binary. If you're looking to embed RustPython into your application,
+//! This is the `rustpython` binary. If you're looking to embed AzLang into your application,
 //! you're likely looking for the [`rustpython_vm`] crate.
 //!
 //! You can install `rustpython` with `cargo install rustpython`, or if you'd like to inject your
@@ -156,7 +156,7 @@ fn install_pip(installer: InstallPipMode, scope: Scope, vm: &VirtualMachine) -> 
 
 fn run_rustpython(vm: &VirtualMachine, run_mode: RunMode) -> PyResult<()> {
     #[cfg(feature = "flame-it")]
-    let main_guard = flame::start_guard("RustPython main");
+    let main_guard = flame::start_guard("AzLang main");
 
     let scope = setup_main_module(vm)?;
 
@@ -187,7 +187,7 @@ fn run_rustpython(vm: &VirtualMachine, run_mode: RunMode) -> PyResult<()> {
             env!("CARGO_PKG_VERSION")
         );
         eprintln!(
-            "RustPython {}.{}.{}",
+            "AzLang {}.{}.{}",
             vm::version::MAJOR,
             vm::version::MINOR,
             vm::version::MICRO,

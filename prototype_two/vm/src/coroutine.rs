@@ -27,7 +27,7 @@ impl ExecutionResult {
 #[derive(Debug)]
 pub struct Coro {
     frame: FrameRef,
-    pub closed: AtomicCell<bool>, // TODO: https://github.com/RustPython/RustPython/pull/3183#discussion_r720560652
+    pub closed: AtomicCell<bool>, // TODO: https://github.com/AzLang/AzLang/pull/3183#discussion_r720560652
     running: AtomicCell<bool>,
     // code
     // _weakreflist

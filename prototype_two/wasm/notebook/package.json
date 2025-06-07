@@ -1,0 +1,40 @@
+{
+    "name": "app",
+    "version": "1.0.0",
+    "description": "Bindings to the AzLang library for WebAssembly",
+    "main": "index.js",
+    "dependencies": {
+        "codemirror": "^5.42.0",
+        "file-loader": "^6.1.0",
+        "katex": "^0.12.0",
+        "local-echo": "^0.2.0",
+        "marked": "^1.1.1",
+        "xterm": "^3.8.0"
+    },
+    "devDependencies": {
+        "@wasm-tool/wasm-pack-plugin": "^1.7.0",
+        "css-loader": "^7.1.2",
+        "html-webpack-plugin": "^5.6.3",
+        "lezer-loader": "^0.3.0",
+        "mini-css-extract-plugin": "^2.9.2",
+        "webpack": "^5.97.1",
+        "webpack-cli": "^6.0.1",
+        "webpack-dev-server": "^5.2.0"
+    },
+    "scripts": {
+        "dev": "webpack serve",
+        "build": "webpack",
+        "dist": "webpack --mode production",
+        "test": "webpack --mode production && cd ../tests && pytest"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/AzLang/AzLang.git"
+    },
+    "author": "Ryan Liddle",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/AzLang/AzLang/issues"
+    },
+    "homepage": "https://github.com/AzLang/AzLang#readme"
+}

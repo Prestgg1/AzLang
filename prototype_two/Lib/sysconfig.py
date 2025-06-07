@@ -1,4 +1,4 @@
-# XXX: RUSTPYTHON; Trick to make sysconfig work as RustPython
+# XXX: RUSTPYTHON; Trick to make sysconfig work as AzLang
 exec(r'''
 """Access to Python's configuration information."""
 
@@ -855,4 +855,4 @@ def _main():
 
 if __name__ == '__main__':
     _main()
-'''.replace("Python", "RustPython").replace("/python", "/rustpython"))
+'''.replace("Python", "AzLang").replace("/python", "/rustpython"))

@@ -1,6 +1,6 @@
 [package]
 name = "rustpython-pylib"
-description = "A subset of the Python standard library for use with RustPython"
+description = "A subset of the Python standard library for use with AzLang"
 license-file = "Lib/PSF-LICENSE"
 include = ["Cargo.toml", "src/**/*.rs", "Lib/", "!Lib/**/test/", "!Lib/**/*.pyc"]
 authors = ["CPython Developers"]

@@ -1,4 +1,4 @@
-//! This crate includes the compiled python bytecode of the RustPython standard library. The most
+//! This crate includes the compiled python bytecode of the AzLang standard library. The most
 //! common way to use this crate is to just add the `"freeze-stdlib"` feature to `rustpython-vm`,
 //! in order to automatically include the python part of the standard library into the binary.
 

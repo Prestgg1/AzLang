@@ -22,7 +22,7 @@ mod termios {
     // TODO: supply these from <asm-generic/ioctl.h> (please file an issue/PR upstream):
     //       IOCSIZE_MASK, IOCSIZE_SHIFT
     // TODO: supply NCC from <asm-generic/termios.h> (please file an issue/PR upstream)
-    // NOTE: I have only found NSWTCH on cygwin, so please alert the RustPython maintainers if it
+    // NOTE: I have only found NSWTCH on cygwin, so please alert the AzLang maintainers if it
     //       is present on your system
     // TODO: supply these from <bits/ioctl-types.h> or <linux/tty.h> (please file an issue/PR
     //       upstream):

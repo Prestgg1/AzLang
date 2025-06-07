@@ -156,7 +156,7 @@ declare_const_name! {
     __iter__,
     __itruediv__,
     __ixor__,
-    __jit__,  // RustPython dialect
+    __jit__,  // AzLang dialect
     __le__,
     __len__,
     __length_hint__,

@@ -720,7 +720,7 @@ mod _csv {
                     let g = GLOBAL_HASHMAP.lock();
                     if let Some(dialect) = g.get(name) {
                         dialect.skipinitialspace
-                        // RustPython todo
+                        // AzLang todo
                         // todo! Perfecting the remaining attributes.
                     } else {
                         false
@@ -740,7 +740,7 @@ mod _csv {
                     let g = GLOBAL_HASHMAP.lock();
                     if let Some(dialect) = g.get(name) {
                         dialect.delimiter
-                        // RustPython todo
+                        // AzLang todo
                         // todo! Perfecting the remaining attributes.
                     } else {
                         b','
@@ -767,7 +767,7 @@ mod _csv {
                             builder = builder.quote(t);
                         }
                         builder
-                        // RustPython todo
+                        // AzLang todo
                         // todo! Perfecting the remaining attributes.
                     } else {
                         &mut builder
@@ -845,7 +845,7 @@ mod _csv {
                         }
                         builder
 
-                        // RustPython todo
+                        // AzLang todo
                         // todo! Perfecting the remaining attributes.
                     } else {
                         &mut builder

@@ -238,13 +238,13 @@ impl VirtualMachine {
             } else if !env_set {
                 "Neither RUSTPYTHONPATH nor PYTHONPATH is set. Try setting one of them to the stdlib directory."
             } else if path_contains_env {
-                "RUSTPYTHONPATH or PYTHONPATH is set, but it doesn't contain the encodings library. If you are customizing the RustPython vm/interpreter, try adding the stdlib directory to the path. If you are developing the RustPython interpreter, it might be a bug during development."
+                "RUSTPYTHONPATH or PYTHONPATH is set, but it doesn't contain the encodings library. If you are customizing the AzLang vm/interpreter, try adding the stdlib directory to the path. If you are developing the AzLang interpreter, it might be a bug during development."
             } else {
-                "RUSTPYTHONPATH or PYTHONPATH is set, but it wasn't loaded to `Settings::path_list`. If you are going to customize the RustPython vm/interpreter, those environment variables are not loaded in the Settings struct by default. Please try creating a customized instance of the Settings struct. If you are developing the RustPython interpreter, it might be a bug during development."
+                "RUSTPYTHONPATH or PYTHONPATH is set, but it wasn't loaded to `Settings::path_list`. If you are going to customize the AzLang vm/interpreter, those environment variables are not loaded in the Settings struct by default. Please try creating a customized instance of the Settings struct. If you are developing the AzLang interpreter, it might be a bug during development."
             };
 
             let mut msg = format!(
-                "RustPython could not import the encodings module. It usually means something went wrong. Please carefully read the following messages and follow the steps.\n\
+                "AzLang could not import the encodings module. It usually means something went wrong. Please carefully read the following messages and follow the steps.\n\
                 \n\
                 {guide_message}");
             if !cfg!(feature = "freeze-stdlib") {

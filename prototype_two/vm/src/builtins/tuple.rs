@@ -590,6 +590,6 @@ impl<T: TransmuteFromObject> ToPyObject for PyTupleTyped<T> {
 
 pub(super) fn tuple_hash(elements: &[PyObjectRef], vm: &VirtualMachine) -> PyResult<PyHash> {
     // TODO: See #3460 for the correct implementation.
-    // https://github.com/RustPython/RustPython/pull/3460
+    // https://github.com/AzLang/AzLang/pull/3460
     crate::utils::hash_iter(elements.iter(), vm)
 }

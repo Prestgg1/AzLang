@@ -88,7 +88,7 @@ pub enum CodegenErrorType {
     UnreachablePattern(PatternUnreachableReason),
     RepeatedAttributePattern,
     ConflictingNameBindPattern,
-    NotImplementedYet, // RustPython marker for unimplemented features
+    NotImplementedYet, // AzLang marker for unimplemented features
 }
 
 impl std::error::Error for CodegenErrorType {}
@@ -149,7 +149,7 @@ impl fmt::Display for CodegenErrorType {
                 write!(f, "alternative patterns bind different names")
             }
             NotImplementedYet => {
-                write!(f, "RustPython does not implement this feature yet")
+                write!(f, "AzLang does not implement this feature yet")
             }
         }
     }

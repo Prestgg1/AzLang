@@ -53,7 +53,7 @@ mod sys {
     #[pyattr(name = "api_version")]
     const API_VERSION: u32 = 0x0; // what C api?
     #[pyattr(name = "copyright")]
-    const COPYRIGHT: &str = "Copyright (c) 2019 RustPython Team";
+    const COPYRIGHT: &str = "Copyright (c) 2019 AzLang Team";
     #[pyattr(name = "float_repr_style")]
     const FLOAT_REPR_STYLE: &str = "short";
     #[pyattr(name = "_framework")]
@@ -218,7 +218,7 @@ mod sys {
     #[pyattr]
     fn _git(vm: &VirtualMachine) -> PyTupleRef {
         vm.new_tuple((
-            ascii!("RustPython"),
+            ascii!("AzLang"),
             version::get_git_identifier(),
             version::get_git_revision(),
         ))

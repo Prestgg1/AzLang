@@ -1,6 +1,6 @@
 [package]
 name = "rustpython-vm"
-description = "RustPython virtual machine."
+description = "AzLang virtual machine."
 include = ["src/**/*.rs", "Cargo.toml", "build.rs", "Lib/**/*.py"]
 version.workspace = true
 authors.workspace = true
@@ -89,7 +89,7 @@ timsort = "0.1.2"
 ## unicode stuff
 unicode_names2 = { workspace = true }
 # TODO: use unic for this; needed for title case:
-# https://github.com/RustPython/RustPython/pull/832#discussion_r275428939
+# https://github.com/AzLang/AzLang/pull/832#discussion_r275428939
 unicode-casing = { workspace = true }
 # update version all at the same time
 unic-ucd-bidi = { workspace = true }

@@ -99,7 +99,7 @@ Options (and corresponding environment variables):
 --help-xoptions: print help about implementation-specific -X options and exit
 --help-all: print complete help information and exit
 
-RustPython extensions:
+AzLang extensions:
 
 
 Arguments:
