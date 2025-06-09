@@ -1,0 +1,19 @@
+{
+    "print": "çap",
+    "mutable_decl": "dəyişən",
+    "constant_decl": "sabit",
+    "function_def": "funksiya",
+    "conditional": "əgər",
+    "_else": "yoxsa",
+    "else_if": "yoxsa əgər",
+    "drop": "sil",
+    "_loop": "gəz",
+    "biginteger": "böyük_ədəd",
+    "lowinteger": "kiçik_ədəd",
+    "integer": "ədəd",
+    "string": "mətn",
+    "len": "uzunluq",
+    "input": "gir",
+    "listtype": "siyahı",
+    "return_name": "çıxış"
+}

@@ -1,0 +1,9 @@
+sabit text: mətn = "Salam";
+funksiya salamla(texts: mətn) {
+    çap(texts);
+};  
+sabit ədədlər: siyahı<ədəd> = [1, 2, 3];
+çap(ədədlər);
+çap(uzunluq(ədədlər));
+dəyişən ad: mətn = giriş("Ad gir: ");
+çap(ad);
