@@ -15,5 +15,10 @@
     "len": "uzunluq",
     "input": "gir",
     "listtype": "siyahı",
-    "return_name": "çıxış"
+    "return_name": "çıxış",
+    "bool": "şərt",
+    "and": "və",
+    "or": "və_ya",
+    "double_and": "&&",
+    "double_or": "||"
 }

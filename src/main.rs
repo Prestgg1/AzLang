@@ -11,6 +11,8 @@ pub use runner::*;
 pub use syntax::Syntax;
 pub use transpiler::*;
 pub use utils::*;
+
+use crate::context::TranspileContext;
 #[derive(Parser)]
 #[command(
     name = "azcli",
@@ -64,34 +66,22 @@ fn build(input_path: &str) -> Result<()> {
     let input_code = utils::read_file(input_path).map_err(|e| eyre!("Fayl oxunmadı!: {}", e))?;
 
     let syntax = Syntax::load().map_err(|e| eyre!("Syntax xətası!: {}", e))?;
-
+    let mut ctx = TranspileContext::new();
     let tokens = lexer::Lexer::new(&input_code, &syntax).tokenize();
     println!("Tokens: {:#?}", tokens);
     let mut parser = parser::Parser::new(tokens);
-    let parsed = parser.parse().map_err(|e| eyre!("Parser xətası: {}", e))?;
+    let parsed = parser
+        .parse(&mut ctx)
+        .map_err(|e| eyre!("Parser xətası: {}", e))?;
     println!("Parsed AST: {:#?}", parsed); // EXPECTED: Expr::String("Mən AzLang ilə yazdım!")
-    let rust_code =
-        transpiler::transpile(&parsed).map_err(|e| eyre!("Transpilasiya xətası: {}", e))?;
-    println!("Rust code: {}", rust_code);
-    utils::write_file("output/output.rs", &rust_code)
+    let rust_code = transpiler::transpile(&parsed, &mut ctx)
+        .map_err(|e| eyre!("Transpilasiya xətası: {}", e))?;
+    println!("Zig code: {}", rust_code);
+    utils::write_file("output/output.zig", &rust_code)
         .map_err(|e| eyre!("Rust faylı yazıla bilmədi: {}", e))?;
-    if runner::compile_and_run("output/output.rs", "output/output").is_err() {
+    if runner::compile_and_run("output/output.zig", "output/output").is_err() {
         eprintln!("❌ Proqram işləmədi.");
     }
-
-    /*
-       let parsed = parser::parse(&input_code, &syntax).map_err(|e| eyre!("Syntax xətası!: {}", e))?;
-    */
-    /*     let rust_code =
-        transpiler::transpile(&parsed).map_err(|e| eyre!("Transpilasiya xətası: {}", e))?;
-
-    utils::write_file("output/output.rs", &rust_code)
-        .map_err(|e| eyre!("Rust faylı yazıla bilmədi: {}", e))?;
-
-    if runner::compile_and_run("output/output.rs", "output/output").is_err() {
-        eprintln!("❌ Proqram işləmədi.");
-    } */
-
     Ok(())
 }
 

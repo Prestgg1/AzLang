@@ -11,17 +11,19 @@ pub fn parse_variable_declaration(parser: &mut Parser, kind: &str) -> Result<Opt
             ));
         }
     };
-
-    match parser.next() {
-        Some(Token::Colon) => {}
-        other => {
-            return Err(format!(
-                "{} üçün ':' gözlənilirdi, tapıldı: {:?}",
-                kind, other
-            ));
-        }
+    if parser.declared_variables.contains(&name) {
+        return Err(format!("Dəyişən '{}' artıq əvvəl təyin olunub", name));
     }
-    let typ = parser.parse_type()?; // Parser metodunu çağırırıq
+    parser.declared_variables.insert(name.clone());
+
+    parser.used_variables.insert(name.clone());
+    let typ = match parser.peek() {
+        Some(Token::Colon) => {
+            parser.next(); // ':' consume
+            Some(parser.parse_type()?)
+        }
+        _ => None,
+    };
 
     match parser.next() {
         Some(Token::Operator(op)) if op == "=" => {}
@@ -35,6 +37,7 @@ pub fn parse_variable_declaration(parser: &mut Parser, kind: &str) -> Result<Opt
 
     let value_expr = parser.parse_expression()?; // Parser metodunu çağırırıq
 
+    // constant ilə input istifadə olunmamalıdır
     if kind == "constant_decl" {
         if let Expr::FunctionCall { name, .. } = &value_expr {
             if name == "input" {
@@ -45,6 +48,7 @@ pub fn parse_variable_declaration(parser: &mut Parser, kind: &str) -> Result<Opt
             }
         }
     }
+
     match kind {
         "mutable_decl" => Ok(Some(Expr::MutableDecl {
             name,
@@ -60,29 +64,6 @@ pub fn parse_variable_declaration(parser: &mut Parser, kind: &str) -> Result<Opt
     }
 }
 
-// "çap(arg)" kimi funksiya çağırışlarını emal edir
-pub fn parse_print_call(parser: &mut Parser) -> Result<Option<Expr>, String> {
-    match parser.next() {
-        Some(Token::LParen) => {
-            let arg = parser.parse_expression()?; // Parser metodunu çağırırıq
-            match parser.next() {
-                Some(Token::RParen) => Ok(Some(Expr::FunctionCall {
-                    name: "print".to_string(),
-                    args: vec![arg],
-                })),
-                other => Err(format!(
-                    "Bağlanış mötərizəsi gözlənilirdi, tapıldı: {:?}",
-                    other
-                )),
-            }
-        }
-        other => Err(format!(
-            "Açılış mötərizəsi gözlənilirdi, tapıldı: {:?}",
-            other
-        )),
-    }
-}
-
 // Bu, proqramımızdakı "sətr"lər, yəni ifadələrdir
 pub fn parse_statement(parser: &mut Parser) -> Result<Option<Expr>, String> {
     match parser.peek() {
@@ -95,10 +76,7 @@ pub fn parse_statement(parser: &mut Parser) -> Result<Option<Expr>, String> {
             };
             parse_variable_declaration(parser, kind_str) // Bu modulun öz funksiyasını çağırırıq
         }
-        Some(Token::Print) => {
-            parser.next();
-            parse_print_call(parser) // Bu modulun öz funksiyasını çağırırıq
-        }
+
         // Gələcəkdə bura yeni ifadə tipləri əlavə edə bilərik:
         // Some(Token::If) => parse_if_statement(parser),
         // Some(Token::For) => parse_for_loop(parser),
@@ -112,12 +90,41 @@ pub fn parse_statement(parser: &mut Parser) -> Result<Option<Expr>, String> {
 pub fn parse_expression_as_statement(parser: &mut Parser) -> Result<Option<Expr>, String> {
     let expr = parser.parse_expression()?; // Parser metodunu çağırırıq
 
-    // input("...") bir dəyişənə mənimsədilməlidir, təkbaşına ifadə ola bilməz
+    // input yalnız dəyişən mənimsədilməsində istifadə oluna bilər
     if let Expr::FunctionCall { name, .. } = &expr {
         if name == "input" {
             return Err("input yalnız dəyişən mənimsədilməsində istifadə oluna bilər.".to_string());
         }
     }
 
+    // VariableRef varsa qeyd et
+    record_variable_usage(&expr, &mut parser.used_variables);
+
     Ok(Some(expr))
+}
+
+fn record_variable_usage(expr: &Expr, used: &mut std::collections::HashSet<String>) {
+    match expr {
+        Expr::VariableRef(name) => {
+            used.insert(name.clone());
+        }
+        Expr::FunctionCall { args, .. } | Expr::BuiltInCall { args, .. } | Expr::List(args) => {
+            for arg in args {
+                record_variable_usage(arg, used);
+            }
+        }
+        Expr::MethodCall { target, args, .. } => {
+            record_variable_usage(target, used);
+            for arg in args {
+                record_variable_usage(arg, used);
+            }
+        }
+        Expr::Return(inner) | Expr::Index { target: inner, .. } => {
+            record_variable_usage(inner, used);
+        }
+        Expr::MutableDecl { value, .. } | Expr::ConstantDecl { value, .. } => {
+            record_variable_usage(value, used);
+        }
+        _ => {}
+    }
 }

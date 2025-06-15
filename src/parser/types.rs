@@ -1,30 +1,32 @@
-use super::{Expr, Parser, Token}; // Token və Expr-i super (parser/mod.rs) vasitəsilə import edirik
+use super::{Parser, Token};
+use crate::parser::ast::Type; // `Type` enumunu import et
 
-// Tipləri emal edir (məsələn, ədəd, siyahı<ədəd>)
-pub fn parse_type(parser: &mut Parser) -> Result<String, String> {
+pub fn parse_type(parser: &mut Parser) -> Result<Type, String> {
     let base_token = parser.next();
     let base = match base_token {
-        Some(Token::TypeName(base)) => base.clone(),
-        Some(Token::Identifier(base)) => base.clone(),
-        Some(Token::Integer) => return Ok("integer".to_string()),
-        Some(Token::String) => return Ok("string".to_string()),
+        Some(Token::TypeName(t)) => t.clone(),
+        Some(Token::Identifier(ident)) => Type::Istifadeci(ident.clone()),
+        Some(Token::Integer) => Type::Integer,
+        Some(Token::BigInteger) => Type::BigInteger,
+        Some(Token::LowInteger) => Type::LowInteger,
+        Some(Token::String) => Type::Metn,
+        Some(Token::SiyahiKeyword) => {
+            match parser.next() {
+                Some(Token::Operator(op)) if op == "<" => (),
+                other => return Err(format!("'<' gözlənilirdi, tapıldı: {:?}", other)),
+            }
+
+            let inner_type = parse_type(parser)?;
+
+            match parser.next() {
+                Some(Token::Operator(op)) if op == ">" => (),
+                other => return Err(format!("'>' gözlənilirdi, tapıldı: {:?}", other)),
+            }
+
+            Type::Siyahi(Box::new(inner_type))
+        }
         other => return Err(format!("Tip gözlənilirdi, tapıldı: {:?}", other)),
     };
-
-    if let Some(Token::Operator(op)) = parser.peek() {
-        if op == "<" {
-            parser.next(); // consume '<'
-            let inner = parse_type(parser)?; // Bu modulun öz funksiyasını rekursiv olaraq çağırırıq
-            match parser.next() {
-                Some(Token::Operator(op)) if op == ">" => {
-                    return Ok(format!("{}<{}>", base, inner));
-                }
-                other => {
-                    return Err(format!("Tip üçün '>' gözlənilirdi, tapıldı: {:?}", other));
-                }
-            }
-        }
-    }
 
     Ok(base)
 }

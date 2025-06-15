@@ -19,6 +19,7 @@ pub struct Syntax {
     pub len: String,
     pub input: String,
     pub listtype: String,
+    pub bool: String,
     pub return_name: String,
 }
 

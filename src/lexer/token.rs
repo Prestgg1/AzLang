@@ -1,7 +1,7 @@
+use crate::parser::ast::Type;
+
 #[derive(Debug, PartialEq, Clone)]
 pub enum Token {
-    Print,
-    Input,
     MutableDecl,
     ConstantDecl,
     FunctionDef,
@@ -9,10 +9,10 @@ pub enum Token {
     Backtick,
     InterpolationStart,
     TemplatePart(String),
+    SiyahiKeyword,
     Else,
-    ElseIf,
     Drop,
-    TypeName(String),
+    TypeName(Type),
     Loop,
     BigInteger,
     LowInteger,
@@ -33,4 +33,8 @@ pub enum Token {
     ListEnd,
     Return,
     EOF,
+    And,       // və
+    Or,        // və ya
+    DoubleAnd, // &&
+    DoubleOr,  // ||
 }

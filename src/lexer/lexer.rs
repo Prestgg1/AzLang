@@ -1,4 +1,5 @@
 use crate::Syntax;
+use crate::parser::ast::Type;
 use std::iter::Peekable;
 use std::str::Chars;
 
@@ -175,14 +176,9 @@ impl<'a> Lexer<'a> {
             }
         }
 
-        if self.syntax.is_type_str(&word) {
-            return Some(Token::TypeName(word));
-        }
+        // Keyword yoxlamaları
 
-        // JSON'daki anahtar kelimelerle eşleştirme
-        if word == self.syntax.print {
-            Some(Token::Print)
-        } else if word == self.syntax.return_name {
+        if word == self.syntax.return_name {
             Some(Token::Return)
         } else if word == self.syntax.mutable_decl {
             Some(Token::MutableDecl)
@@ -194,20 +190,24 @@ impl<'a> Lexer<'a> {
             Some(Token::Conditional)
         } else if word == self.syntax._else {
             Some(Token::Else)
-        } else if word == self.syntax.else_if {
-            Some(Token::ElseIf)
-        } else if word == self.syntax.drop {
-            Some(Token::Drop)
         } else if word == self.syntax._loop {
             Some(Token::Loop)
+        } else if word == self.syntax.bool {
+            return Some(Token::TypeName(Type::Bool));
+        } else if word == self.syntax.listtype {
+            return Some(Token::SiyahiKeyword);
         } else if word == self.syntax.biginteger {
-            Some(Token::BigInteger)
+            return Some(Token::TypeName(Type::BigInteger));
         } else if word == self.syntax.lowinteger {
-            Some(Token::LowInteger)
-        } else if word == self.syntax.integer {
-            Some(Token::Integer)
+            return Some(Token::TypeName(Type::LowInteger));
         } else if word == self.syntax.string {
-            Some(Token::String)
+            return Some(Token::TypeName(Type::Metn));
+        } else if word == self.syntax.integer {
+            return Some(Token::TypeName(Type::Integer));
+        } else if self.syntax.is_type_str(&word) {
+            return Some(Token::TypeName(Type::Istifadeci(word)));
+        } else if word == self.syntax.string {
+            return Some(Token::String);
         } else {
             Some(Token::Identifier(word))
         }
@@ -227,7 +227,9 @@ impl<'a> Lexer<'a> {
                 | ('+', '=')
                 | ('-', '=')
                 | ('*', '=')
-                | ('/', '=') => {
+                | ('/', '=')
+                | ('&', '&')
+                | ('|', '|') => {
                     op.push(next_ch);
                     self.chars.next();
                 }

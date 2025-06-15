@@ -1,9 +1,16 @@
-sabit text: mətn = "Salam";
-funksiya salamla(texts: mətn) {
-    çap(texts);
-};  
-sabit ədədlər: siyahı<ədəd> = [1, 2, 3];
-çap(ədədlər);
-çap(uzunluq(ədədlər));
-dəyişən ad: mətn = giriş("Ad gir: ");
-çap(ad);
+dəyişən ededler = [1,2,3,5];
+gəz eded ededler {
+    çap(eded);
+};
+
+sabit a = 10;
+əgər a == 10 {
+    çap("a 10-e beraber");
+}
+yoxsa əgər a > 10 {
+    çap("a 10-dən boyuk");
+}
+yoxsa {
+    çap("a 10-dən kicik");
+};
+    
